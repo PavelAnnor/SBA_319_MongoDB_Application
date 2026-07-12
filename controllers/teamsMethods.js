@@ -40,7 +40,12 @@ async function addTeam(req, res) {
 
 async function deleteTeam(req, res) {
   try {
-    const q = {}
+   const q = {
+     $or: [
+       { name: req.params.team },
+       { abbreviation: req.params.team.toUpperCase() },
+     ],
+   };
     const result = await Teams.findOneAndDelete(q);
     res.send(result);
   } catch (error) {
