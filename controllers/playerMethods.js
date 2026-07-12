@@ -1,66 +1,48 @@
 import mongoose from "mongoose";
 import Players from "../models/playersModel.js";
-import {capital} from "../util/util.js"
+import Teams from "../models/teamsModel.js"
+import { capital } from "../util/util.js";
 
-async function viewAllPlayers(req,res) {
-
-
-    try {
-
-        if(req.params.name){
-            const q = {
-              $or: [
-                { fName: capital(req.params.name.toLowerCase()) },
-                { lName: capital(req.params.name.toLowerCase()) },
-              ],
-            };
-             const result = await Players.find(q);
-             res.send(result)
-             return
-        }
-        
-        const result = await Players.find({});
-        res.send(result)
-        
-    } catch (error) {
-
-        console.log(error)
-        
+async function viewAllPlayers(req, res) {
+  try {
+    if (req.params.name) {
+      const q = {
+        $or: [
+          { fName: capital(req.params.name.toLowerCase()) },
+          { lName: capital(req.params.name.toLowerCase()) },
+        ],
+      };
+      const result = await Players.find(q);
+      res.send(result);
+      return;
     }
 
-   
+    const result = await Players.find({});
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
+async function viewPlayerByPosition(req, res) {
+  try {
+    const q = { positions: { $in: [req.params.position.toUpperCase()] } };
+    const result = await Players.find(q);
 
-async function viewPlayerByPosition(req,res){
-
-
-    try {
-
-        const q = { positions: { $in: [req.params.position.toUpperCase()] } };
-        const result = await Players.find(q)
-        
-        res.send(result);
-        
-    } catch (error) {
-        console.log(error);
-        
-    }
-
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-
-async function addPlayer(req,res) {
-
-    try {
-        const result = Players.create(req.body)
-        res.send(result)
-    } catch (error) {
-
-        console.log(error)
-        
-    }
-    
+async function addPlayer(req, res) {
+  try {
+    const result = Players.create(req.body);
+    addPlayerToTeam(req,res)
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function updateStats(req, res) {
@@ -84,8 +66,8 @@ async function updateStats(req, res) {
       "freethrow%": 0,
     };
 
-    for(let i in req.body){
-        x[i] = req.body[i]
+    for (let i in req.body) {
+      x[i] = req.body[i];
     }
 
     const result = await Players.findOneAndUpdate(
@@ -94,37 +76,48 @@ async function updateStats(req, res) {
       { returnDocument: "after" },
     );
 
-   
-    
     res.send(result);
   } catch (error) {
     console.log(error);
   }
 }
 
-async function deletePlayer(req,res) {
+async function deletePlayer(req, res) {
+  try {
+    const q = {
+      $or: [
+        { fName: capital(req.params.name.toLowerCase()) },
+        { lName: capital(req.params.name.toLowerCase()) },
+      ],
+    };
+    const result = await Players.findOneAndDelete(q);
 
-
-    try {
-         const q = {
-           $or: [
-             { fName: capital(req.params.name.toLowerCase()) },
-             { lName: capital(req.params.name.toLowerCase()) },
-           ],
-         };
-        const result = await Players.findOneAndDelete(q);
-
-        res.send(result)
-        
-    } catch (error) {
-
-        console.log(error)
-        
-    }
-    
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
+async function addPlayerToTeam(req, res) {
+  try {
+    const q = {
+      $or: [
+        { name: req.body.team },
+        { abbreviation: req.body.team.toUpperCase() },
+      ],
+    };
+    const playerName = capital(req.body.fName) +" " + capital(req.body.lName)
+    const result = await Teams.findOneAndUpdate(q,{$push:{players:playerName}},{returnDocument:"after"});
+   
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-
-
-export {viewAllPlayers, addPlayer, viewPlayerByPosition, updateStats, deletePlayer}
+export {
+  viewAllPlayers,
+  addPlayer,
+  viewPlayerByPosition,
+  updateStats,
+  deletePlayer,
+};

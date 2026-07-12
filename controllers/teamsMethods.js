@@ -54,4 +54,28 @@ async function deleteTeam(req, res) {
 }
 
 
-export {viewAllTeams,addTeam,deleteTeam}
+
+
+async function updateChampionships(req, res) {
+  try {
+    const q = {
+      $or: [
+        { name: req.params.team },
+        { abbreviation: req.params.team.toUpperCase() },
+      ],
+    };
+    const result = await Teams.findOneAndUpdate(
+      q,
+      {
+        $set: { championships: req.body.championships },
+      },
+      { returnDocument: "after" },
+    );
+    res.send(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export {viewAllTeams,addTeam,deleteTeam,updateChampionships}
