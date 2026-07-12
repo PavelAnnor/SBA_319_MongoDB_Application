@@ -30,6 +30,8 @@ const awardSchedma = mongoose.Schema({
   previousWinners: {
     type: [
       {
+         _id: false ,
+   
         name: {
           type: String,
           required: true,
