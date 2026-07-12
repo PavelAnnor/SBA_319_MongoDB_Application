@@ -7,6 +7,7 @@ import connectDB from "./conn.js"
 //ROUTE IMPORTS
 import playerRoutes from "./routes/playerRoutes.js"
 import teamRoutes from "./routes/teamRoutes.js"
+import awardRoutes from "./routes/awardRoutes.js"
 
 
 const app = express();
@@ -16,6 +17,7 @@ const PORT = 3000;
 app.use(express.json())
 app.use("/players",playerRoutes)
 app.use("/teams",teamRoutes)
+app.use("/awards",awardRoutes)
 
 
 
