@@ -18,6 +18,7 @@ EX: “http://localhost:3000/players”
 GET: Retrieves all player documents in the database
 POST: Adds a document representing a player and their corresponding information to the database
 Sample request body sent in a Post request to add a player to the players collection:
+
 {
   "fName": "Bam",
   "lName": "Adebayo",
@@ -40,6 +41,7 @@ Sample request body sent in a Post request to add a player to the players collec
     "freethrow%": 0
   }
 }
+
 Endpoint: “/players/:name”
 EX: “http://localhost:3000/players/edwards/” OR  “http://localhost:3000/players/anthony/” 
 GET: Retrieves player information for a player with specified last OR first name. NOTE: First letter in req.params.name can be lowercase. Be aware of hyphenated names, names with other special characters
@@ -49,6 +51,7 @@ EX: “http://localhost:3000/players/edwards/updateStat”
 PATCH: Updates the stats field of a specified player. NOTE. req.body can contain any number of properties. Properties present in req.body but not in the stats field will be added. Properties existing in both will be replaced.
 Sample req.body sent in a patch request to “http://localhost:3000/players/edwards/updateStat”
 In order to update the stats of the player anthony edwards 
+
  {
     "gamesPlayed": 45,
     "minPerGame": 32.1,
@@ -101,6 +104,7 @@ PATCH: Updates the”championships” field of a team (name or abbreviated name)
 
 Sample req.body sent in a patch request to “http://localhost:3000/teams/NYK/updateChampionships”
 In order to update the championships field of the New York Knicks (NYK) 
+
 {
     "championships":45
 }
@@ -114,6 +118,7 @@ Endpoint: “/awards”
 GET: Retrieves all nba awards within the database, with corresponding winners, descriptions,etc
 POST: Adds a document representing an award and  corresponding information to the database
 Sample request body sent in a post request  to add an award to the database 
+
 {
   "name":"Most Valuable Player",
   "abbreviation":"MVP",
@@ -132,6 +137,7 @@ GET: Retrieves a specified nba awards within the database, with corresponding wi
 PATCH: Adds an object to the previousWinners field of a specified document. Object contains the name of the winner and the year the award was won
 
 Sample request body sent in a post request to  to add an award winner to the previousWinners field 
+
 {"name":"Shai Gilgeous Alexander","year":2027},
 
 Endpoint: “/awards/year/:year”
