@@ -42,5 +42,9 @@ const playerSchema = mongoose.Schema({
 
 });
 
+//As db grows, alot of players will be added, so better to index names for better read 
+playerSchema.index({ lName: 1 });
+playerSchema.index({ fName: 1 });
+
 
 export default mongoose.model("players",playerSchema,"players")

@@ -14,7 +14,7 @@ Router.route("/").get(viewAllTeams).post(addTeam)
 
 Router.route("/:team").get(viewAllTeams).delete(deleteTeam)
 
-Router.route("/:team/updateChampionShips/").patch(
+Router.route("/:team/updateChampionships").patch(
   updateChampionships,
 );
 

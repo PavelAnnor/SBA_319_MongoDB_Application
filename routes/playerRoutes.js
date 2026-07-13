@@ -9,9 +9,11 @@ Router.route("/").get(viewAllPlayers).post(addPlayer)
 
 Router.route("/:name").get(viewAllPlayers).delete(deletePlayer)
 
+Router.route("/:name/updateStat/").patch(updateStats);
+
 Router.route("/position/:position").get(viewPlayerByPosition)
 
-Router.route("/:name/updateStat/").patch(updateStats)
+
 
 export default Router;
 
