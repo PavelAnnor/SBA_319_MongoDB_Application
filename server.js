@@ -15,6 +15,12 @@ const PORT = 3000;
 
 //MIDDLEWARE + ROUTERS
 app.use(express.json())
+
+app.use((req, res,next) => {
+  console.log(`A ${req.method} request sent to ${req.url} with the body:`);
+  console.log(req.body);
+  next()
+});
 app.use("/players",playerRoutes)
 app.use("/teams",teamRoutes)
 app.use("/awards",awardRoutes)

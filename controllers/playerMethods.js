@@ -3,6 +3,7 @@ import Players from "../models/playersModel.js";
 import Teams from "../models/teamsModel.js"
 import { capital } from "../util/util.js";
 
+//function to view all players
 async function viewAllPlayers(req, res) {
   try {
     if (req.params.name) {
@@ -24,6 +25,7 @@ async function viewAllPlayers(req, res) {
   }
 }
 
+//function to view players with a specified positon in the positons array
 async function viewPlayerByPosition(req, res) {
   try {
     const q = { positions: { $in: [req.params.position.toUpperCase()] } };
@@ -34,7 +36,7 @@ async function viewPlayerByPosition(req, res) {
     console.log(error);
   }
 }
-
+//function to add a player docu
 async function addPlayer(req, res) {
   try {
     const result = Players.create(req.body);
@@ -44,7 +46,7 @@ async function addPlayer(req, res) {
     console.log(error);
   }
 }
-
+//function toupdate/add stats to stats field of a docu
 async function updateStats(req, res) {
   try {
     const q = {
@@ -81,7 +83,7 @@ async function updateStats(req, res) {
     console.log(error);
   }
 }
-
+//function to delete a player
 async function deletePlayer(req, res) {
   try {
     const q = {
@@ -98,6 +100,7 @@ async function deletePlayer(req, res) {
   }
 }
 
+//function that runs when a player document is created. It adds them to the corresponding tams array within the teams collection
 async function addPlayerToTeam(req, res) {
   try {
     const q = {

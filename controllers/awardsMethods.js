@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Award from "../models/awardsModel.js";
 
-
+//Function to find all award documents 
 async function viewAwards(req,res) {
 
 
@@ -26,7 +26,7 @@ async function viewAwards(req,res) {
 }
 
 
-
+//function to create a new award docu
 async function addAward(req, res) {
   try {
     const result = await Award.create(req.body);
@@ -36,7 +36,7 @@ async function addAward(req, res) {
   }
 }
 
-
+//function to add a winner object to an award docu
 async function addAwardWinner(req, res) {
   try {
      const q = {
@@ -56,7 +56,7 @@ async function addAwardWinner(req, res) {
     console.log(error);
   }
 }
-
+//fucntion to retrive awards for a specific year
 async function viewAwardsByYear(req, res) {
   try {
    
@@ -74,8 +74,8 @@ async function viewAwardsByYear(req, res) {
           winner: {
             $filter: {
               input: "$previousWinners",
-              as: "winner",
-              cond: { $eq: ["$$winner.year", Number(req.params.year)] },
+              as: "winner", //as is a variable created to reference every element in the array (like let i in for loops)
+              cond: { $eq: ["$$winner.year", Number(req.params.year)] }, //n=filter the array to only include elements where the .year property is req.params.year
             },
           },
         },
