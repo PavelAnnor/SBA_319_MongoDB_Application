@@ -5,7 +5,7 @@ SBA 318 - Express Server Application Date: 07/12/26
 
 An API for information on the NBA. Including information about players, awards, and teams.
 
-🔧 Technology HTML, CSS, JS, Express, Mongoose, MongoDB
+🔧 Technology JS, Express, Mongoose, MongoDB
 
 💡 Notes N/A
 
@@ -15,7 +15,9 @@ An API for information on the NBA. Including information about players, awards, 
 Player Routes
 Endpoint: “/players”
 EX: “http://localhost:3000/players”
+
 GET: Retrieves all player documents in the database
+
 POST: Adds a document representing a player and their corresponding information to the database
 Sample request body sent in a Post request to add a player to the players collection:
 
@@ -44,10 +46,14 @@ Sample request body sent in a Post request to add a player to the players collec
 
 Endpoint: “/players/:name”
 EX: “http://localhost:3000/players/edwards/” OR  “http://localhost:3000/players/anthony/” 
+
 GET: Retrieves player information for a player with specified last OR first name. NOTE: First letter in req.params.name can be lowercase. Be aware of hyphenated names, names with other special characters
+
 DELETE: Deletes player information for a player with specified last OR first name. NOTE: First letter in req.params.name can be lowercase. Be aware of hyphenated names, names with other special characters
+
 Endpoint: “/players/:name/updateStat”
 EX: “http://localhost:3000/players/edwards/updateStat”
+
 PATCH: Updates the stats field of a specified player. NOTE. req.body can contain any number of properties. Properties present in req.body but not in the stats field will be added. Properties existing in both will be replaced.
 Sample req.body sent in a patch request to “http://localhost:3000/players/edwards/updateStat”
 In order to update the stats of the player anthony edwards 
@@ -74,6 +80,7 @@ OR
 
 Endpoint: “/players/position/:position”
 EX: “http://localhost:3000/players/position/sg”
+
 GET: Retrieves all players within the database that have the specified req.params.position within the “positions” field (an array). Possible values for req.params.position include pg,sg,sf,pf,c (representing the 5 positions in basketball)
 
 
@@ -85,7 +92,9 @@ GET: Retrieves all players within the database that have the specified req.param
 
 Team Routes 
 Endpoint: “/teams”
+
 GET: Retrieves all teams within the database with corresponding names, years, founded, and players
+
 POST: Adds a document representing a team and their corresponding information to the database
 Sample request body sent in a post request  to add a team to the teams collection
 { "name": "Los Angeles Lakers", "abbreviation": "LAL", "founded": 1947, "championships": 17, "players": [], "location": { "city": "Los Angeles", "state": "California" } }
@@ -93,13 +102,16 @@ Sample request body sent in a post request  to add a team to the teams collectio
 
 Endpoint: “/teams/:team”
 EX: “http://localhost:3000/teams/NYK” or “http://localhost:3000/teams/New%20York%20Knicks”
+
 GET: Retrieves teams with a specified name OR abbreviated name from req.params.team (EX New York Knicks or nyk) 
 NOTE: First letter in req.params.name can be lowercase. Be aware of hyphenated names, names with other special characters
+
 DELETE: Deletes teams with a specified name OR abbreviated name from req.params.team (EX New York Knicks or nyk) 
 NOTE: First letter in req.params.name can be lowercase. Be aware of hyphenated names, names with other special characters
 
 Endpoint: “/teams/:team/updateChampionships”
 EX:“http://localhost:3000/teams/NYK/updateChampionships”
+
 PATCH: Updates the”championships” field of a team (name or abbreviated name)
 
 Sample req.body sent in a patch request to “http://localhost:3000/teams/NYK/updateChampionships”
